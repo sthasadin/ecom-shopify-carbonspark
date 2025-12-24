@@ -5,6 +5,8 @@ import Image from "next/image";
 import { Product } from "@/lib/shopify/types";
 import { formatPrice } from "@/lib/shopify";
 import { useCart } from "@/context/cart-context";
+import { motion, AnimatePresence } from "framer-motion";
+import { Spinner } from "@/components/ui/spinner";
 
 type ProductDetailsProps = {
   product: Product;
@@ -13,7 +15,6 @@ type ProductDetailsProps = {
 export function ProductDetails({ product }: ProductDetailsProps) {
   const { addItem, isLoading } = useCart();
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>(() => {
-    // Initialize with first available option for each
     const initial: Record<string, string> = {};
     product.options.forEach((option) => {
       initial[option.name] = option.values[0];
@@ -22,7 +23,6 @@ export function ProductDetails({ product }: ProductDetailsProps) {
   });
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
-  // Find the variant that matches selected options
   const selectedVariant = product.variants.find((variant) =>
     variant.selectedOptions.every(
       (option) => selectedOptions[option.name] === option.value
@@ -47,27 +47,40 @@ export function ProductDetails({ product }: ProductDetailsProps) {
       <div className="space-y-4">
         {/* Main Image */}
         <div className="aspect-[3/4] relative bg-gray-100 rounded-lg overflow-hidden">
-          {product.images[selectedImageIndex] ? (
-            <Image
-              src={product.images[selectedImageIndex].url}
-              alt={product.images[selectedImageIndex].altText || product.title}
-              fill
-              className="object-cover"
-              priority
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center text-gray-400">
-              No image
-            </div>
-          )}
+          <AnimatePresence mode="wait">
+            {product.images[selectedImageIndex] ? (
+              <motion.div
+                key={selectedImageIndex}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="absolute inset-0"
+              >
+                <Image
+                  src={product.images[selectedImageIndex].url}
+                  alt={product.images[selectedImageIndex].altText || product.title}
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </motion.div>
+            ) : (
+              <div className="w-full h-full flex items-center justify-center text-gray-400">
+                No image
+              </div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* Thumbnail Gallery */}
         {product.images.length > 1 && (
           <div className="flex gap-2 overflow-x-auto pb-2">
             {product.images.map((image, index) => (
-              <button
+              <motion.button
                 key={image.url}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => setSelectedImageIndex(index)}
                 className={`relative w-20 h-20 flex-shrink-0 rounded-md overflow-hidden ${
                   index === selectedImageIndex
@@ -81,14 +94,18 @@ export function ProductDetails({ product }: ProductDetailsProps) {
                   fill
                   className="object-cover"
                 />
-              </button>
+              </motion.button>
             ))}
           </div>
         )}
       </div>
 
       {/* Product Info */}
-      <div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+      >
         <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
           {product.title}
         </h1>
@@ -123,8 +140,10 @@ export function ProductDetails({ product }: ProductDetailsProps) {
               {option.values.map((value) => {
                 const isSelected = selectedOptions[option.name] === value;
                 return (
-                  <button
+                  <motion.button
                     key={value}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                     onClick={() => handleOptionChange(option.name, value)}
                     className={`px-4 py-2 text-sm border rounded-md transition-colors ${
                       isSelected
@@ -133,7 +152,7 @@ export function ProductDetails({ product }: ProductDetailsProps) {
                     }`}
                   >
                     {value}
-                  </button>
+                  </motion.button>
                 );
               })}
             </div>
@@ -142,32 +161,49 @@ export function ProductDetails({ product }: ProductDetailsProps) {
 
         {/* Add to Cart */}
         <div className="mt-8">
-          <button
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             onClick={handleAddToCart}
             disabled={!selectedVariant?.availableForSale || isLoading}
-            className="w-full py-4 bg-black text-white font-medium rounded-md hover:bg-gray-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+            className="w-full py-4 bg-black text-white font-medium rounded-md hover:bg-gray-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
-            {isLoading
-              ? "Adding..."
-              : !selectedVariant?.availableForSale
-              ? "Sold Out"
-              : "Add to Cart"}
-          </button>
+            {isLoading ? (
+              <>
+                <Spinner size="sm" />
+                <span>Adding...</span>
+              </>
+            ) : !selectedVariant?.availableForSale ? (
+              "Sold Out"
+            ) : (
+              "Add to Cart"
+            )}
+          </motion.button>
         </div>
 
         {/* Description */}
         {product.descriptionHtml && (
-          <div className="mt-8 pt-8 border-t">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="mt-8 pt-8 border-t"
+          >
             <h2 className="text-lg font-semibold text-gray-900 mb-4">Description</h2>
             <div
               className="prose prose-sm text-gray-600"
               dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
             />
-          </div>
+          </motion.div>
         )}
 
         {/* Product Details */}
-        <div className="mt-8 pt-8 border-t">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+          className="mt-8 pt-8 border-t"
+        >
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Details</h2>
           <dl className="space-y-2 text-sm">
             {product.vendor && (
@@ -183,8 +219,8 @@ export function ProductDetails({ product }: ProductDetailsProps) {
               </div>
             )}
           </dl>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 }
