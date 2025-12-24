@@ -192,6 +192,7 @@ const COLLECTION_FRAGMENT = `
     handle
     title
     description
+    updatedAt
     image {
       url
       altText
@@ -223,6 +224,7 @@ export async function getCollections(): Promise<Collection[]> {
   return response.data.collections.edges.map((edge) => ({
     ...edge.node,
     products: [],
+    updatedAt: edge.node.updatedAt,
   }));
 }
 

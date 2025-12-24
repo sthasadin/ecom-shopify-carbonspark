@@ -58,6 +58,7 @@ export type Collection = {
   description: string;
   image: Image | null;
   products: Product[];
+  updatedAt?: string;
 };
 
 export type CartItem = {
