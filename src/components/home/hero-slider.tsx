@@ -52,14 +52,19 @@ export function HeroSlider({ slides, autoPlayInterval = 5000 }: HeroSliderProps)
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
+      {/* Spacer for aspect ratio */}
+      <div className="hidden lg:block w-full aspect-[3/1]" />
+      <div className="block lg:hidden w-full aspect-[4/5]" />
+
       {/* Slides */}
-      <AnimatePresence mode="wait">
+      <AnimatePresence initial={false}>
         <motion.div
           key={currentIndex}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.5, ease: "easeInOut" }}
+          transition={{ duration: 0.15, ease: "easeOut" }}
+          className="absolute inset-0"
         >
           <Link href={currentSlide.link} className="block">
             {/* Desktop Image */}
