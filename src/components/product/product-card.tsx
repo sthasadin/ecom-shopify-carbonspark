@@ -24,7 +24,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
         <motion.div
           whileHover={{ y: -4 }}
           transition={{ duration: 0.2 }}
-          className="aspect-[3/4] relative bg-gray-100 rounded-lg overflow-hidden mb-3"
+          className="aspect-[3/4] relative bg-background-light rounded-none overflow-hidden mb-3"
         >
           {featuredImage ? (
             <Image
@@ -35,15 +35,15 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center text-gray-400">
+            <div className="w-full h-full flex items-center justify-center text-text-muted">
               No image
             </div>
           )}
         </motion.div>
-        <h3 className="text-sm font-medium text-gray-900 group-hover:underline line-clamp-1">
+        <h3 className="text-body-sm font-medium text-text-primary group-hover:text-primary line-clamp-1 transition-colors duration-200">
           {title}
         </h3>
-        <p className="text-sm text-gray-600 mt-1">
+        <p className="text-body-sm text-text-secondary mt-1">
           {formatPrice(priceRange.minVariantPrice)}
         </p>
       </Link>

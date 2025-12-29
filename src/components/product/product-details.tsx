@@ -46,7 +46,7 @@ export function ProductDetails({ product }: ProductDetailsProps) {
       {/* Images */}
       <div className="space-y-4">
         {/* Main Image */}
-        <div className="aspect-[3/4] relative bg-gray-100 rounded-lg overflow-hidden">
+        <div className="aspect-[3/4] relative bg-background-light rounded-none overflow-hidden">
           <AnimatePresence mode="wait">
             {product.images[selectedImageIndex] ? (
               <motion.div
@@ -66,7 +66,7 @@ export function ProductDetails({ product }: ProductDetailsProps) {
                 />
               </motion.div>
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-gray-400">
+              <div className="w-full h-full flex items-center justify-center text-text-muted">
                 No image
               </div>
             )}
@@ -82,10 +82,10 @@ export function ProductDetails({ product }: ProductDetailsProps) {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setSelectedImageIndex(index)}
-                className={`relative w-20 h-20 flex-shrink-0 rounded-md overflow-hidden ${
+                className={`relative w-20 h-20 flex-shrink-0 rounded-none overflow-hidden border-2 transition-colors duration-200 ${
                   index === selectedImageIndex
-                    ? "ring-2 ring-black"
-                    : "ring-1 ring-gray-200"
+                    ? "border-primary"
+                    : "border-border hover:border-primary"
                 }`}
               >
                 <Image
@@ -106,7 +106,7 @@ export function ProductDetails({ product }: ProductDetailsProps) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
       >
-        <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
+        <h1 className="text-h1 font-semibold text-text-primary">
           {product.title}
         </h1>
 
@@ -114,17 +114,17 @@ export function ProductDetails({ product }: ProductDetailsProps) {
         <div className="mt-4">
           {selectedVariant ? (
             <div className="flex items-center gap-3">
-              <span className="text-2xl font-semibold">
+              <span className="text-h2 font-semibold text-text-primary">
                 {formatPrice(selectedVariant.price)}
               </span>
               {selectedVariant.compareAtPrice && (
-                <span className="text-lg text-gray-500 line-through">
+                <span className="text-body-lg text-text-muted line-through">
                   {formatPrice(selectedVariant.compareAtPrice)}
                 </span>
               )}
             </div>
           ) : (
-            <span className="text-2xl font-semibold">
+            <span className="text-h2 font-semibold text-text-primary">
               {formatPrice(product.priceRange.minVariantPrice)}
             </span>
           )}
@@ -133,7 +133,7 @@ export function ProductDetails({ product }: ProductDetailsProps) {
         {/* Options */}
         {product.options.map((option) => (
           <div key={option.id} className="mt-6">
-            <label className="block text-sm font-medium text-gray-900 mb-2">
+            <label className="block text-body-sm font-medium text-text-primary mb-2">
               {option.name}
             </label>
             <div className="flex flex-wrap gap-2">
@@ -145,10 +145,10 @@ export function ProductDetails({ product }: ProductDetailsProps) {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => handleOptionChange(option.name, value)}
-                    className={`px-4 py-2 text-sm border rounded-md transition-colors ${
+                    className={`px-4 py-2 text-body-sm border rounded-none transition-colors duration-200 ${
                       isSelected
-                        ? "border-black bg-black text-white"
-                        : "border-gray-300 hover:border-black"
+                        ? "border-secondary bg-secondary text-white"
+                        : "border-border text-text-primary hover:border-primary"
                     }`}
                   >
                     {value}
@@ -166,7 +166,7 @@ export function ProductDetails({ product }: ProductDetailsProps) {
             whileTap={{ scale: 0.98 }}
             onClick={handleAddToCart}
             disabled={!selectedVariant?.availableForSale || isLoading}
-            className="w-full py-4 bg-black text-white font-medium rounded-md hover:bg-gray-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="w-full py-4 bg-secondary text-white font-medium rounded-none hover:bg-secondary-hover transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             {isLoading ? (
               <>
@@ -187,11 +187,11 @@ export function ProductDetails({ product }: ProductDetailsProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="mt-8 pt-8 border-t"
+            className="mt-8 pt-8 border-t border-border"
           >
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Description</h2>
+            <h2 className="text-h3 font-semibold text-text-primary mb-4">Description</h2>
             <div
-              className="prose prose-sm text-gray-600"
+              className="prose prose-sm text-text-secondary"
               dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
             />
           </motion.div>
@@ -202,20 +202,20 @@ export function ProductDetails({ product }: ProductDetailsProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="mt-8 pt-8 border-t"
+          className="mt-8 pt-8 border-t border-border"
         >
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Details</h2>
-          <dl className="space-y-2 text-sm">
+          <h2 className="text-h3 font-semibold text-text-primary mb-4">Details</h2>
+          <dl className="space-y-2 text-body-sm">
             {product.vendor && (
               <div className="flex">
-                <dt className="w-24 text-gray-500">Vendor</dt>
-                <dd className="text-gray-900">{product.vendor}</dd>
+                <dt className="w-24 text-text-muted">Vendor</dt>
+                <dd className="text-text-primary">{product.vendor}</dd>
               </div>
             )}
             {product.productType && (
               <div className="flex">
-                <dt className="w-24 text-gray-500">Type</dt>
-                <dd className="text-gray-900">{product.productType}</dd>
+                <dt className="w-24 text-text-muted">Type</dt>
+                <dd className="text-text-primary">{product.productType}</dd>
               </div>
             )}
           </dl>

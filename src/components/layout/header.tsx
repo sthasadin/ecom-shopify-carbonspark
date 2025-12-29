@@ -24,11 +24,11 @@ export function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 bg-white border-b border-gray-200">
+      <header className="sticky top-0 z-40 bg-background border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <Link href="/" className="text-xl font-bold tracking-tight">
+            <Link href="/" className="text-h3 font-semibold text-text-primary tracking-tight">
               bydaniellealexzandra
             </Link>
 
@@ -36,25 +36,25 @@ export function Header() {
             <nav className="hidden md:flex items-center space-x-8">
               <Link
                 href="/collections"
-                className="text-sm font-medium text-gray-700 hover:text-black transition-colors"
+                className="text-body-sm font-medium text-text-secondary hover:text-text-primary transition-colors duration-200"
               >
                 Shop
               </Link>
               <Link
                 href="/collections/new-arrivals"
-                className="text-sm font-medium text-gray-700 hover:text-black transition-colors"
+                className="text-body-sm font-medium text-text-secondary hover:text-text-primary transition-colors duration-200"
               >
                 New Arrivals
               </Link>
               <Link
                 href="/about"
-                className="text-sm font-medium text-gray-700 hover:text-black transition-colors"
+                className="text-body-sm font-medium text-text-secondary hover:text-text-primary transition-colors duration-200"
               >
                 About
               </Link>
               <Link
                 href="/contact"
-                className="text-sm font-medium text-gray-700 hover:text-black transition-colors"
+                className="text-body-sm font-medium text-text-secondary hover:text-text-primary transition-colors duration-200"
               >
                 Contact
               </Link>
@@ -65,7 +65,7 @@ export function Header() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={openCart}
-              className="relative p-2 text-gray-700 hover:text-black transition-colors"
+              className="relative p-2 text-text-secondary hover:text-text-primary transition-colors duration-200"
               aria-label="Open cart"
             >
               <svg
@@ -93,7 +93,7 @@ export function Header() {
                     }}
                     exit={{ scale: 0.5, opacity: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="absolute -top-1 -right-1 bg-black text-white text-xs w-5 h-5 rounded-full flex items-center justify-center"
+                    className="absolute -top-1 -right-1 bg-secondary text-white text-caption w-5 h-5 rounded-none flex items-center justify-center"
                   >
                     {itemCount}
                   </motion.span>
