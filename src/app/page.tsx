@@ -4,27 +4,29 @@ import { getProducts, getCollections } from "@/lib/shopify";
 import { ProductGrid } from "@/components/product/product-grid";
 import { HeroSlider } from "@/components/home/hero-slider";
 
+// Static hero slides with custom promotional images
+const heroSlides = [
+  {
+    id: "slide-1",
+    desktopImage: "/images/hero/slide-1-desktop.webp",
+    mobileImage: "/images/hero/slide-1-mobile.webp",
+    alt: "The Duet Collection - Shop Now",
+    link: "/collections",
+  },
+  {
+    id: "slide-2",
+    desktopImage: "/images/hero/slide-2-desktop.webp",
+    mobileImage: "/images/hero/slide-2-mobile.webp",
+    alt: "End of Year Sale - Get Up To 50% Off",
+    link: "/collections",
+  },
+];
+
 export default async function Home() {
   const [products, collections] = await Promise.all([
     getProducts(8),
     getCollections(),
   ]);
-
-  // Create hero slides from products
-  const heroSlides = products.slice(0, 4).map((product, index) => ({
-    id: product.id,
-    image: product.featuredImage || { url: "", altText: "" },
-    tagline: index === 0 ? "NEW COLLECTION" : index === 1 ? "TRENDING NOW" : index === 2 ? "BEST SELLERS" : "LIMITED EDITION",
-    headline: index === 0
-      ? "Elevate Your Style"
-      : index === 1
-      ? "Discover Premium Fashion"
-      : index === 2
-      ? "Curated For You"
-      : "Shop The Latest",
-    ctaText: "SHOP THE COLLECTION",
-    ctaLink: "/collections",
-  }));
 
   return (
     <>
