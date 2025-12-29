@@ -64,36 +64,48 @@ export default async function Home() {
         </video>
       </section>
 
-      {/* Category Cards Section */}
+      {/* Collections Section */}
       {collections.length > 0 && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {collections.slice(0, 3).map((collection) => (
-              <Link
-                key={collection.id}
-                href={`/collections/${collection.handle}`}
-                className="group relative aspect-[4/3] bg-background-light rounded-none overflow-hidden"
-              >
-                {collection.image ? (
-                  <Image
-                    src={collection.image.url}
-                    alt={collection.image.altText || collection.title}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-background-light" />
-                )}
-                <div className="absolute inset-0 bg-gradient-to-t from-secondary/60 to-transparent flex items-end p-6">
-                  <div>
-                    <h3 className="text-h3 font-semibold text-white uppercase tracking-wide">
+        <section className="bg-background-warm py-16 lg:py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Section Header */}
+            <div className="text-center mb-12">
+              <h2 className="text-h3 lg:text-h2 font-semibold text-primary uppercase tracking-widest mb-6">
+                Our Collections
+              </h2>
+              <p className="text-body text-text-secondary leading-relaxed max-w-3xl mx-auto">
+                Explore our carefully curated collections, each designed to complement your unique style.
+                From everyday essentials to statement pieces, discover premium fashion that elevates your wardrobe.
+              </p>
+            </div>
+
+            {/* Collections Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+              {collections.slice(0, 5).map((collection) => (
+                <Link
+                  key={collection.id}
+                  href={`/collections/${collection.handle}`}
+                  className="group relative aspect-[3/4] bg-background-light rounded-none overflow-hidden"
+                >
+                  {collection.image ? (
+                    <Image
+                      src={collection.image.url}
+                      alt={collection.image.altText || collection.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-background-light" />
+                  )}
+                  {/* Title Overlay */}
+                  <div className="absolute inset-x-0 bottom-0 bg-secondary/80 py-3 px-2">
+                    <h3 className="text-body-sm font-medium text-white text-center uppercase tracking-wider">
                       {collection.title}
                     </h3>
-                    <p className="text-white/80 text-body-sm mt-1">Shop Now →</p>
                   </div>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              ))}
+            </div>
           </div>
         </section>
       )}
