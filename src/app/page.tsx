@@ -36,13 +36,13 @@ export default async function Home() {
       {/* Intro Content Section */}
       <section className="bg-background py-16 lg:py-20">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-h3 lg:text-h2 font-semibold text-text-primary uppercase tracking-widest mb-6">
-            Introducing The Collection
+          <h2 className="text-h3 lg:text-h2 font-semibold text-primary uppercase tracking-widest mb-6">
+            Curated For You
           </h2>
           <p className="text-body text-text-secondary leading-relaxed">
-            Experience the art of style in perfect harmony. Our curated collection features
-            premium pieces designed for the modern individual. Each item is carefully selected
-            to ensure the highest quality, blending contemporary design with timeless elegance.
+            At bydaniellealexzandra, we believe fashion is an expression of individuality.
+            Our carefully curated collection blends contemporary design with timeless elegance,
+            offering premium pieces crafted for those who appreciate refined style and exceptional quality.
           </p>
         </div>
       </section>
