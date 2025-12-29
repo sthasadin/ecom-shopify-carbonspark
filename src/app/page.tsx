@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { getProducts, getCollections } from "@/lib/shopify";
 import { ProductGrid } from "@/components/product/product-grid";
+import { HeroSlider } from "@/components/home/hero-slider";
 
 export default async function Home() {
   const [products, collections] = await Promise.all([
@@ -9,71 +10,26 @@ export default async function Home() {
     getCollections(),
   ]);
 
+  // Create hero slides from products
+  const heroSlides = products.slice(0, 4).map((product, index) => ({
+    id: product.id,
+    image: product.featuredImage || { url: "", altText: "" },
+    tagline: index === 0 ? "NEW COLLECTION" : index === 1 ? "TRENDING NOW" : index === 2 ? "BEST SELLERS" : "LIMITED EDITION",
+    headline: index === 0
+      ? "Elevate Your Style"
+      : index === 1
+      ? "Discover Premium Fashion"
+      : index === 2
+      ? "Curated For You"
+      : "Shop The Latest",
+    ctaText: "SHOP THE COLLECTION",
+    ctaLink: "/collections",
+  }));
+
   return (
     <>
-      {/* Hero Section */}
-      <section className="bg-background-warm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center py-16 lg:py-24">
-            {/* Left - Text Content */}
-            <div>
-              <h1 className="text-display font-semibold tracking-tight text-text-primary mb-6 leading-tight">
-                Premium Fashion Collection
-              </h1>
-              <p className="text-body-lg text-text-secondary mb-8 max-w-lg">
-                Discover our curated selection of contemporary pieces designed for the modern individual.
-                Elevate your style with bydaniellealexzandra.
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <Link
-                  href="/collections"
-                  className="inline-block bg-secondary text-white px-8 py-3 rounded-none font-medium hover:bg-secondary-hover transition-colors duration-200"
-                >
-                  Shop Collection
-                </Link>
-                <Link
-                  href="/about"
-                  className="inline-block bg-background text-text-primary px-8 py-3 rounded-none font-medium border border-border hover:border-primary transition-colors duration-200"
-                >
-                  Learn More
-                </Link>
-              </div>
-            </div>
-
-            {/* Right - Hero Images */}
-            <div className="relative">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-4">
-                  <div className="aspect-[3/4] bg-background-light rounded-none overflow-hidden">
-                    {products[0]?.featuredImage && (
-                      <Image
-                        src={products[0].featuredImage.url}
-                        alt={products[0].title}
-                        width={300}
-                        height={400}
-                        className="w-full h-full object-cover"
-                      />
-                    )}
-                  </div>
-                </div>
-                <div className="space-y-4 pt-8">
-                  <div className="aspect-[3/4] bg-background-light rounded-none overflow-hidden">
-                    {products[1]?.featuredImage && (
-                      <Image
-                        src={products[1].featuredImage.url}
-                        alt={products[1].title}
-                        width={300}
-                        height={400}
-                        className="w-full h-full object-cover"
-                      />
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Hero Slider */}
+      <HeroSlider slides={heroSlides} autoPlayInterval={5000} />
 
       {/* Category Cards Section */}
       {collections.length > 0 && (
