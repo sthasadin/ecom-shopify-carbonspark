@@ -1,17 +1,18 @@
 "use client";
 
-import { forwardRef, ButtonHTMLAttributes } from "react";
+import { forwardRef, ReactNode } from "react";
 import { motion, HTMLMotionProps } from "framer-motion";
 import { Spinner } from "./spinner";
 
 type ButtonVariant = "primary" | "secondary" | "outline" | "text";
 type ButtonSize = "sm" | "md" | "lg";
 
-interface ButtonProps extends Omit<HTMLMotionProps<"button">, "size"> {
+interface ButtonProps extends Omit<HTMLMotionProps<"button">, "size" | "children"> {
   variant?: ButtonVariant;
   size?: ButtonSize;
   isLoading?: boolean;
   fullWidth?: boolean;
+  children?: ReactNode;
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
