@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { getProducts, getCollections } from "@/lib/shopify";
-import { ProductGrid } from "@/components/product/product-grid";
+import { getProducts, getCollections, formatPrice } from "@/lib/shopify";
 import { HeroSlider } from "@/components/home/hero-slider";
 
 // Static hero slides with custom promotional images
@@ -250,18 +249,108 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Featured Products Section */}
-      <section className="bg-background">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      {/* Best Sellers Section */}
+      <section className="bg-background py-16 lg:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Section Header */}
           <div className="text-center mb-12">
-            <h2 className="text-h1 font-semibold text-text-primary mb-4">
-              Featured Products
+            <h2 className="text-h3 lg:text-h2 font-semibold text-primary uppercase tracking-widest">
+              Best Sellers
             </h2>
-            <p className="text-text-secondary max-w-2xl mx-auto">
-              Discover our most popular pieces, hand-picked for their exceptional quality and style.
-            </p>
           </div>
-          <ProductGrid products={products} />
+
+          {/* Products Grid */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+            {products.slice(0, 4).map((product) => {
+              const hasComparePrice = product.variants[0]?.compareAtPrice;
+              const currentPrice = product.variants[0]?.price || product.priceRange.minVariantPrice;
+              const comparePrice = product.variants[0]?.compareAtPrice;
+
+              // Calculate discount percentage
+              const discountPercentage = hasComparePrice
+                ? Math.round(
+                    ((parseFloat(comparePrice!.amount) - parseFloat(currentPrice.amount)) /
+                      parseFloat(comparePrice!.amount)) *
+                      100
+                  )
+                : 0;
+
+              return (
+                <Link
+                  key={product.id}
+                  href={`/products/${product.handle}`}
+                  className="group block"
+                >
+                  {/* Image Container */}
+                  <div className="relative aspect-[3/4] bg-background-light rounded-none overflow-hidden mb-3">
+                    {product.featuredImage ? (
+                      <Image
+                        src={product.featuredImage.url}
+                        alt={product.featuredImage.altText || product.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        sizes="(max-width: 768px) 50vw, 25vw"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-text-muted">
+                        No image
+                      </div>
+                    )}
+
+                    {/* Sale Badge */}
+                    {discountPercentage > 0 && (
+                      <span className="absolute top-3 left-3 bg-error text-white text-caption font-medium px-2 py-1">
+                        -{discountPercentage}%
+                      </span>
+                    )}
+
+                    {/* Wishlist Heart */}
+                    <button
+                      className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center text-text-secondary hover:text-error transition-colors duration-200"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        // Wishlist functionality can be added later
+                      }}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-5 h-5"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+
+                  {/* Product Info */}
+                  <h3 className="text-body-sm font-medium text-text-primary group-hover:text-primary line-clamp-1 transition-colors duration-200">
+                    {product.title}
+                  </h3>
+
+                  {/* Price */}
+                  <div className="mt-1 flex items-center gap-2">
+                    {hasComparePrice && (
+                      <span className="text-body-sm text-text-muted line-through">
+                        {formatPrice(comparePrice!)}
+                      </span>
+                    )}
+                    <span className={`text-body-sm font-medium ${hasComparePrice ? 'text-error' : 'text-text-primary'}`}>
+                      {product.variants.length > 1 ? 'From ' : ''}{formatPrice(currentPrice)}
+                    </span>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+
+          {/* View All Button */}
           <div className="text-center mt-12">
             <Link
               href="/collections"
