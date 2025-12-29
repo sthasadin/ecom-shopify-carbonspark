@@ -48,13 +48,13 @@ export default async function Home() {
       </section>
 
       {/* Full-Width Video Section */}
-      <section className="w-full">
+      <section className="w-full relative aspect-video overflow-hidden">
         <video
           autoPlay
           muted
           loop
           playsInline
-          className="w-full h-auto object-cover"
+          className="absolute inset-0 w-full h-full object-cover"
         >
           <source
             src="https://bydaniellealexandra.com/cdn/shop/videos/c/vp/e64902d70439445b8dd5faac18d55035/e64902d70439445b8dd5faac18d55035.HD-720p-1.6Mbps-25685719.mp4?v=0"
