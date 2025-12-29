@@ -33,6 +33,37 @@ export default async function Home() {
       {/* Hero Slider */}
       <HeroSlider slides={heroSlides} autoPlayInterval={5000} />
 
+      {/* Intro Content Section */}
+      <section className="bg-background py-16 lg:py-20">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-h3 lg:text-h2 font-semibold text-text-primary uppercase tracking-widest mb-6">
+            Introducing The Collection
+          </h2>
+          <p className="text-body text-text-secondary leading-relaxed">
+            Experience the art of style in perfect harmony. Our curated collection features
+            premium pieces designed for the modern individual. Each item is carefully selected
+            to ensure the highest quality, blending contemporary design with timeless elegance.
+          </p>
+        </div>
+      </section>
+
+      {/* Full-Width Video Section */}
+      <section className="w-full">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-full h-auto object-cover"
+        >
+          <source
+            src="https://bydaniellealexandra.com/cdn/shop/videos/c/vp/e64902d70439445b8dd5faac18d55035/e64902d70439445b8dd5faac18d55035.HD-720p-1.6Mbps-25685719.mp4?v=0"
+            type="video/mp4"
+          />
+          Your browser does not support the video tag.
+        </video>
+      </section>
+
       {/* Category Cards Section */}
       {collections.length > 0 && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
