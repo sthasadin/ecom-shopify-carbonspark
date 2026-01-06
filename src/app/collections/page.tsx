@@ -2,6 +2,9 @@ import Link from "next/link";
 import { getCollections } from "@/lib/shopify";
 import type { Metadata } from "next";
 
+// Revalidate data every 60 seconds for dynamic Shopify content
+export const revalidate = 60;
+
 export const metadata: Metadata = {
   title: "Collections",
   description: "Browse all our collections",

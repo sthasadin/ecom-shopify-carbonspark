@@ -3,6 +3,9 @@ import Image from "next/image";
 import { getProducts, getCollections, formatPrice } from "@/lib/shopify";
 import { HeroSlider } from "@/components/home/hero-slider";
 
+// Revalidate data every 60 seconds for dynamic Shopify content
+export const revalidate = 60;
+
 // Static hero slides with custom promotional images
 const heroSlides = [
   {

@@ -3,6 +3,9 @@ import { getCollection, getCollections } from "@/lib/shopify";
 import { ProductGrid } from "@/components/product/product-grid";
 import type { Metadata } from "next";
 
+// Revalidate data every 60 seconds for dynamic Shopify content
+export const revalidate = 60;
+
 type Props = {
   params: Promise<{ handle: string }>;
 };
