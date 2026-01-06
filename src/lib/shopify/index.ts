@@ -22,13 +22,15 @@ const endpoint = `https://${domain}/api/2024-01/graphql.json`;
 async function shopifyFetch<T>({
   query,
   variables,
-  cache = "force-cache",
+  cache,
   tags,
+  revalidate = 60,
 }: {
   query: string;
   variables?: Record<string, unknown>;
   cache?: RequestCache;
   tags?: string[];
+  revalidate?: number | false;
 }): Promise<ShopifyResponse<T>> {
   try {
     const response = await fetch(endpoint, {
@@ -38,8 +40,11 @@ async function shopifyFetch<T>({
         "X-Shopify-Storefront-Access-Token": storefrontAccessToken,
       },
       body: JSON.stringify({ query, variables }),
-      cache,
-      ...(tags && { next: { tags } }),
+      ...(cache && { cache }),
+      next: {
+        revalidate,
+        ...(tags && { tags }),
+      },
     });
 
     if (!response.ok) {
@@ -347,6 +352,7 @@ export async function createCart(): Promise<Cart> {
   const response = await shopifyFetch<CartCreateResponse>({
     query,
     cache: "no-store",
+    revalidate: false,
   });
 
   return reshapeCart(response.data.cartCreate.cart);
@@ -366,6 +372,7 @@ export async function getCart(cartId: string): Promise<Cart | null> {
     query,
     variables: { cartId },
     cache: "no-store",
+    revalidate: false,
   });
 
   if (!response.data.cart) return null;
@@ -395,6 +402,7 @@ export async function addToCart(
     query,
     variables: { cartId, lines },
     cache: "no-store",
+    revalidate: false,
   });
 
   return reshapeCart(response.data.cartLinesAdd.cart);
@@ -423,6 +431,7 @@ export async function updateCart(
     query,
     variables: { cartId, lines },
     cache: "no-store",
+    revalidate: false,
   });
 
   return reshapeCart(response.data.cartLinesUpdate.cart);
@@ -451,6 +460,7 @@ export async function removeFromCart(
     query,
     variables: { cartId, lineIds },
     cache: "no-store",
+    revalidate: false,
   });
 
   return reshapeCart(response.data.cartLinesRemove.cart);
