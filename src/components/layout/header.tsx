@@ -43,16 +43,28 @@ export function Header() {
             {/* Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
               <Link
-                href="/collections"
+                href="/courses"
                 className="text-body-sm font-medium text-text-secondary hover:text-text-primary transition-colors duration-200"
               >
-                Shop
+                Courses
               </Link>
               <Link
-                href="/collections/new-arrivals"
+                href="/best-sellers"
                 className="text-body-sm font-medium text-text-secondary hover:text-text-primary transition-colors duration-200"
               >
-                New Arrivals
+                Our Best Sellers
+              </Link>
+              <Link
+                href="/train-your-team"
+                className="text-body-sm font-medium text-text-secondary hover:text-text-primary transition-colors duration-200"
+              >
+                Train Your Team
+              </Link>
+              <Link
+                href="/locations"
+                className="text-body-sm font-medium text-text-secondary hover:text-text-primary transition-colors duration-200"
+              >
+                Locations
               </Link>
               <Link
                 href="/about"
@@ -61,10 +73,10 @@ export function Header() {
                 About
               </Link>
               <Link
-                href="/contact"
+                href="/her"
                 className="text-body-sm font-medium text-text-secondary hover:text-text-primary transition-colors duration-200"
               >
-                Contact
+                HER
               </Link>
             </nav>
 
