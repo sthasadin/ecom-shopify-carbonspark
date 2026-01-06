@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export function Footer() {
   return (
@@ -7,8 +8,14 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="col-span-1 md:col-span-2">
-            <Link href="/" className="text-h3 font-semibold text-text-primary tracking-tight">
-              bydaniellealexzandra
+            <Link href="/">
+              <Image
+                src="/images/logo.webp"
+                alt="by Danielle Alexandra"
+                width={150}
+                height={50}
+                className="h-12 w-auto"
+              />
             </Link>
             <p className="mt-4 text-body-sm text-text-secondary max-w-md">
               Premium fashion for the modern individual. Quality craftsmanship meets contemporary design.
