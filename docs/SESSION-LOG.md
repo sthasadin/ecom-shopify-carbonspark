@@ -158,6 +158,41 @@ const heroSlides = [
 
 ---
 
+### 7. ISR / Dynamic Data Revalidation (Caching Fix)
+**Commits:** `b3cad2d`, `7c1cda0`
+
+**Problem Identified:**
+- New products/collections added in Shopify weren't appearing on frontend
+- Data was cached indefinitely due to `cache: "force-cache"` in Shopify fetch
+- Required manual redeploy to see changes
+
+**Solution Implemented:**
+
+**Phase 1 - Page-level revalidation (`b3cad2d`):**
+Added `export const revalidate = 60;` to all pages:
+- `src/app/page.tsx` (Homepage)
+- `src/app/collections/page.tsx` (Collections list)
+- `src/app/collections/[handle]/page.tsx` (Collection detail)
+- `src/app/products/[handle]/page.tsx` (Product detail)
+
+**Phase 2 - Fetch-level revalidation fix (`7c1cda0`):**
+Updated `src/lib/shopify/index.ts`:
+- Removed `cache: "force-cache"` default
+- Added `revalidate = 60` parameter to `shopifyFetch` function
+- Changed fetch options to use `next: { revalidate, tags }`
+- Cart mutations use `cache: "no-store"` + `revalidate: false` (no caching)
+
+**Caching Behavior Now:**
+| Operation | Caching |
+|-----------|---------|
+| Products (queries) | Revalidate every 60s |
+| Collections (queries) | Revalidate every 60s |
+| Cart (mutations) | No cache |
+
+**Result:** New products/collections appear within 60-120 seconds without redeploying!
+
+---
+
 ## Current Homepage Structure
 
 ```
@@ -206,7 +241,11 @@ const heroSlides = [
 | `docs/STYLE-GUIDE.md` | Design system documentation |
 | `tailwind.config.ts` | Design tokens |
 | `src/app/globals.css` | CSS variables |
-| `src/app/page.tsx` | Homepage layout |
+| `src/app/page.tsx` | Homepage layout + revalidation |
+| `src/app/collections/page.tsx` | Collections list + revalidation |
+| `src/app/collections/[handle]/page.tsx` | Collection detail + revalidation |
+| `src/app/products/[handle]/page.tsx` | Product detail + revalidation |
+| `src/lib/shopify/index.ts` | Shopify API client + ISR caching |
 | `src/components/home/hero-slider.tsx` | Hero slider component |
 | `src/components/ui/button.tsx` | Reusable button |
 | `src/components/layout/header.tsx` | Header with design tokens |
@@ -258,7 +297,10 @@ const heroSlides = [
 | `0b457fc` | Redesign collections section with 5-column grid |
 | `e8001ae` | Redesign Best Sellers section with enhanced product cards |
 | `fb7c9fe` | Fix: Remove onClick handler from Server Component |
+| `fc73da5` | Add session log documentation |
+| `b3cad2d` | Add ISR revalidation for dynamic Shopify data (page-level) |
+| `7c1cda0` | Fix Shopify data caching to properly revalidate (fetch-level) |
 
 ---
 
-*Last Updated: January 2026*
+*Last Updated: January 6, 2026*
