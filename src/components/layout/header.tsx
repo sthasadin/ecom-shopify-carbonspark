@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useCart } from "@/context/cart-context";
 import { CartDrawer } from "@/components/cart/cart-drawer";
 import { motion, AnimatePresence } from "framer-motion";
@@ -28,8 +29,15 @@ export function Header() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <Link href="/" className="text-h3 font-semibold text-text-primary tracking-tight">
-              bydaniellealexzandra
+            <Link href="/" className="flex-shrink-0">
+              <Image
+                src="/images/logo.webp"
+                alt="by Danielle Alexandra"
+                width={150}
+                height={50}
+                className="h-10 w-auto"
+                priority
+              />
             </Link>
 
             {/* Navigation */}
