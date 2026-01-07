@@ -6,20 +6,22 @@ import Link from "next/link";
 
 export function CoursesHero() {
   return (
-    <section className="relative bg-[#a89f94] min-h-[500px] md:min-h-[600px] overflow-hidden">
+    <section className="relative bg-[#b5a99a]">
       {/* Background Image */}
-      <Image
-        src="/images/courses-hero.webp"
-        alt="Hair Extension Courses"
-        fill
-        className="object-cover object-center"
-        priority
-      />
+      <div className="relative w-full h-[400px] md:h-[450px] lg:h-[500px]">
+        <Image
+          src="/images/courses-hero.webp"
+          alt="Hair Extension Courses"
+          fill
+          className="object-cover object-right-top"
+          sizes="100vw"
+          priority
+        />
 
-      {/* Overlay for better text readability */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#a89f94]/80 via-[#a89f94]/50 to-transparent" />
+        {/* Overlay for better text readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#b5a99a]/95 via-[#b5a99a]/70 to-transparent md:via-[#b5a99a]/40" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 h-full flex items-center">
+        <div className="absolute inset-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -46,6 +48,7 @@ export function CoursesHero() {
             Book Now
           </Link>
         </motion.div>
+        </div>
       </div>
     </section>
   );
