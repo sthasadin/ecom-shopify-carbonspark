@@ -13,7 +13,7 @@ export function CoursesHero() {
           src="/images/courses-hero.webp"
           alt="Hair Extension Courses"
           fill
-          className="object-cover object-right-top"
+          className="object-contain object-right"
           sizes="100vw"
           priority
         />
