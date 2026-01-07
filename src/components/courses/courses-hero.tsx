@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export function CoursesHero() {
   return (
-    <section className="relative bg-[#b5a99a]">
+    <section className="relative bg-[#c4b9ae]">
       {/* Background Image */}
       <div className="relative w-full h-[400px] md:h-[450px] lg:h-[500px]">
         <Image
@@ -19,7 +19,7 @@ export function CoursesHero() {
         />
 
         {/* Overlay for better text readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#b5a99a]/95 via-[#b5a99a]/70 to-transparent md:via-[#b5a99a]/40" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#c4b9ae] via-[#c4b9ae]/80 to-transparent md:via-[#c4b9ae]/50" />
 
         <div className="absolute inset-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
         <motion.div
