@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { getProducts } from "@/lib/shopify";
-import { ProductGrid } from "@/components/product/product-grid";
 import { CoursesHero } from "@/components/courses/courses-hero";
+import { CoursesGrid } from "@/components/courses/courses-grid";
 import { CoursesContent } from "@/components/courses/courses-content";
 import { CoursesFAQ } from "@/components/courses/courses-faq";
 
@@ -24,15 +24,7 @@ export default async function CoursesPage() {
       {/* Courses Grid Section */}
       <section id="courses" className="bg-white py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-h1 font-light text-text-primary mb-4">
-              Our Courses
-            </h2>
-            <p className="text-body text-text-secondary max-w-2xl mx-auto">
-              Choose from our range of professional hair extension courses
-            </p>
-          </div>
-          <ProductGrid products={products} />
+          <CoursesGrid products={products} />
         </div>
       </section>
 
