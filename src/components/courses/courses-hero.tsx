@@ -1,22 +1,23 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 
 export function CoursesHero() {
   return (
     <section className="relative bg-[#a89f94] min-h-[500px] md:min-h-[600px] overflow-hidden">
-      {/* Background Image - uncomment when image is provided */}
-      {/* <Image
-        src="/images/courses-hero.jpg"
+      {/* Background Image */}
+      <Image
+        src="/images/courses-hero.webp"
         alt="Hair Extension Courses"
         fill
         className="object-cover object-center"
         priority
-      /> */}
+      />
 
       {/* Overlay for better text readability */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#a89f94]/90 via-[#a89f94]/70 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#a89f94]/80 via-[#a89f94]/50 to-transparent" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 h-full flex items-center">
         <motion.div
