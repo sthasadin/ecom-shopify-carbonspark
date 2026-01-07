@@ -6,20 +6,21 @@ import Link from "next/link";
 
 export function CoursesHero() {
   return (
-    <section className="relative bg-[#c4b9ae]">
+    <section className="relative">
       {/* Background Image */}
       <div className="relative w-full h-[400px] md:h-[450px] lg:h-[500px]">
         <Image
           src="/images/courses-hero.webp"
           alt="Hair Extension Courses"
           fill
-          className="object-contain object-right"
+          className="object-cover"
+          style={{ objectPosition: "50% 20%" }}
           sizes="100vw"
           priority
         />
 
         {/* Overlay for better text readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#c4b9ae] via-[#c4b9ae]/80 to-transparent md:via-[#c4b9ae]/50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#c9bfb5] via-[#c9bfb5]/70 to-transparent" />
 
         <div className="absolute inset-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
         <motion.div
